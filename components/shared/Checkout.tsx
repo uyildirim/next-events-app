@@ -16,7 +16,7 @@ const Checkout = ({ event, userId }: { event: IEvent; userId: string }) => {
       buyerId: userId,
     };
     await checkoutOrder(order);
-    console.log(event);
+    console.log(order);
   };
 
   useEffect(() => {
