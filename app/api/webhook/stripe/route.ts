@@ -3,8 +3,6 @@ import { NextResponse } from "next/server";
 import { createOrder } from "@/lib/actions/order.actions";
 
 export async function POST(request: Request) {
-  console.log("Req", request);
-
   const body = await request.text();
 
   const sig = request.headers.get("stripe-signature") as string;
@@ -14,6 +12,7 @@ export async function POST(request: Request) {
 
   try {
     event = stripe.webhooks.constructEvent(body, sig, endpointSecret);
+    console.log("event.data.object", event.data.object);
   } catch (err) {
     return NextResponse.json({ message: "Webhook error", error: err });
   }
@@ -34,6 +33,8 @@ export async function POST(request: Request) {
     };
 
     const newOrder = await createOrder(order);
+    console.log("newOrder", newOrder);
+
     return NextResponse.json({ message: "OK", order: newOrder });
   }
 
