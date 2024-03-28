@@ -3,6 +3,8 @@ import { NextResponse } from "next/server";
 import { createOrder } from "@/lib/actions/order.actions";
 
 export async function POST(request: Request) {
+  console.log("Req", request);
+
   const body = await request.text();
 
   const sig = request.headers.get("stripe-signature") as string;
